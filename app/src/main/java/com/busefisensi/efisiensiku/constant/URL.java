@@ -2,7 +2,7 @@ package com.busefisensi.efisiensiku.constant;
 
 public enum URL {
 
-    AGENT("http://rbt.arutala.co.id/efisiensi-mobile/v1/agen/turun/12");
+    AGENT("http://rbt.arutala.co.id/efisiensi-mobile-test/v1/agen/naik");
 
     String url;
     URL(String url) {

@@ -11,4 +11,6 @@
     <string name="msg_agent_loaded">Agent data successfully loaded</string>
     <string name="departure">Departure</string>
     <string name="search_agent">Search agent</string>
+    <string name="today">Today</string>
+    <string name="departure_date">Choose Departure Date</string>
 </resources>

@@ -25,8 +25,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.HomeActivity"></activity>
-        <activity android:name=".activity.OriginActivity"></activity>
+        <activity android:name=".activity.AgentActivity"></activity>
         <activity android:name=".activity.SearchActivity"></activity>
+        <activity android:name=".activity.CalendarActivity"></activity>
     </application>
 
 </manifest>

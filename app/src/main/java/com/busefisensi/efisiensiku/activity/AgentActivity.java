@@ -32,7 +32,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class OriginActivity extends AppCompatActivity implements AgentAdapter.OnClickListener {
+public class AgentActivity extends AppCompatActivity implements AgentAdapter.OnClickListener {
 
     private TextView tvToolbar;
     private TextView tvOriginBody;
@@ -48,7 +48,7 @@ public class OriginActivity extends AppCompatActivity implements AgentAdapter.On
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.layout_origin);
+        setContentView(R.layout.layout_origin_destination);
 
         tvOriginBody = findViewById(R.id.tv_origin_body);
         tvOriginBodyAddress = findViewById(R.id.tv_origin_body_address);
@@ -73,7 +73,7 @@ public class OriginActivity extends AppCompatActivity implements AgentAdapter.On
                     @Override
                     public void run() {
                         SWToast.showLongError(e.getMessage());
-                        SWLog.e(OriginActivity.class, "loadAllAgent", e.getMessage());
+                        SWLog.e(AgentActivity.class, "loadAllAgent", e.getMessage());
                         progressDialog.dismiss();
                     }
                 });
@@ -94,8 +94,8 @@ public class OriginActivity extends AppCompatActivity implements AgentAdapter.On
                             HashMap<String, Object> data = result.getData();
                             agents = (List) data.get("agents");
 
-                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(OriginActivity.this);
-                            CityAdapter cityAdapter = new CityAdapter(OriginActivity.this, agents, OriginActivity.this);
+                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(AgentActivity.this);
+                            CityAdapter cityAdapter = new CityAdapter(AgentActivity.this, agents, AgentActivity.this);
                             rvCity.setLayoutManager(linearLayoutManager);
                             rvCity.setAdapter(cityAdapter);
                         } else {
@@ -111,7 +111,7 @@ public class OriginActivity extends AppCompatActivity implements AgentAdapter.On
     private class OnClickSearch implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(OriginActivity.this, SearchActivity.class);
+            Intent intent = new Intent(AgentActivity.this, SearchActivity.class);
             intent.putParcelableArrayListExtra("agents", new ArrayList<>(agents));
             startActivityForResult(intent, RequestCode.SEARCH_AGENT.get());
         }
@@ -139,9 +139,14 @@ public class OriginActivity extends AppCompatActivity implements AgentAdapter.On
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent();
-        intent.putExtra("agent", agent);
-        setResult(RESULT_OK, intent);
-        finish();
+        if(agent.getId() != null) {
+            Intent intent = new Intent();
+            intent.putExtra("agent", agent);
+            setResult(RESULT_OK, intent);
+            finish();
+        } else {
+            setResult(RESULT_OK);
+            finish();
+        }
     }
 }

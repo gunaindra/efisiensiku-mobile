@@ -12,4 +12,6 @@
     <string name="msg_agent_loaded">Pengambilan daftar agen berhasil</string>
     <string name="departure">Keberangkatan</string>
     <string name="search_agent">Cari agen</string>
+    <string name="today">Hari ini</string>
+    <string name="departure_date">Pilih Tanggal Keberangkatan</string>
 </resources>
