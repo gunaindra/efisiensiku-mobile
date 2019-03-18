@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:layout_margin="20dp"
+    android:id="@+id/rl_passenger_item">
+
+    <ImageView
+        android:id="@+id/iv_selection"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@drawable/ic_selection_true"/>
+
+    <TextView
+        android:id="@+id/tv_passenger_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/iv_selection"
+        android:layout_marginLeft="20dp"
+        android:text="Passenger name"
+        android:textColor="@android:color/black"/>
+
+</RelativeLayout>

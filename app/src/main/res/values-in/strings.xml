@@ -20,4 +20,5 @@
     <string name="choose_passenger">Pilih Penumpang</string>
     <string name="save">Simpan</string>
     <string name="empty_passenger">Daftarkan penumpang untuk memulai pemesanan</string>
+    <string name="passenger_informations">Informasi Penumpang</string>
 </resources>

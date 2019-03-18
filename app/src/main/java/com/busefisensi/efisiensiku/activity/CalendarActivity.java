@@ -54,6 +54,7 @@ public class CalendarActivity extends AppCompatActivity {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView materialCalendarView, @NonNull CalendarDay calendarDay, boolean b) {
                 Intent intent = new Intent();
+                intent.putExtra("fullDate", calendarDay.getDate().toString());
                 intent.putExtra("day", calendarDay.getDate().getDayOfWeek().name());
                 intent.putExtra("date", calendarDay.getDate().getDayOfMonth());
                 intent.putExtra("month", calendarDay.getDate().getMonth().name());
