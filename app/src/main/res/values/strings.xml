@@ -15,4 +15,8 @@
     <string name="today">Today</string>
     <string name="departure_date">Choose Departure Date</string>
     <string name="load_schedule_success">Schedule has been loaded</string>
+    <string name="passenger">Passenger</string>
+    <string name="choose_passenger">Choose Passenger</string>
+    <string name="save">Save</string>
+    <string name="empty_passenger">Register passenger to start order</string>
 </resources>
