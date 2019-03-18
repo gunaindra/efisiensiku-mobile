@@ -51,17 +51,17 @@ public class PassengerActivity extends AppCompatActivity {
         tvTitle.setText(getResources().getString(R.string.passenger_informations));
 
         Intent intent = getIntent();
-        if(intent!=null && intent.getParcelableArrayListExtra("passengers") != null) {
+        if(intent!=null) {
             passengers = intent.getParcelableArrayListExtra("passengers");
             loadPassenger();
 
             Agent departure = intent.getParcelableExtra("departure");
             Agent destination = intent.getParcelableExtra("destination");
-            String date = intent.getParcelableExtra("date");
-            String time = intent.getParcelableExtra("time");
+            String date = intent.getStringExtra("date");
+            String time = intent.getStringExtra("time");
 
-            tvInformationDeparture.setText(departure.getAgentCityName());
-            tvInformationDestination.setText(destination.getAgentCityName());
+            tvInformationDeparture.setText(getResources().getString(R.string.departure) + " " + departure.getAgentCityName());
+            tvInformationDestination.setText(getResources().getString(R.string.destination) + " " + destination.getAgentCityName());
             tvInformationDateTime.setText(date + ", Pukul " + time);
         }
 
@@ -95,10 +95,10 @@ public class PassengerActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == RequestCode.ADD_OR_CHOOSE_PASSENGER.get() && data != null) {
-            List<Passenger> newPassenger = data.getParcelableArrayListExtra("passenger");
-            for(Passenger passenger: newPassenger) {
-                passengers.add(passenger);
-            }
+            List<Passenger> newPassenger = data.getParcelableArrayListExtra("passengers");
+            passengers = new ArrayList<>(newPassenger);
+
+            loadPassenger();
         }
     }
 

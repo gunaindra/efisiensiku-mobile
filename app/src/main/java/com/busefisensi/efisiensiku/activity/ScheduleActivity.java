@@ -15,6 +15,7 @@ import com.busefisensi.efisiensiku.model.Agent;
 import com.busefisensi.efisiensiku.model.Schedule;
 import com.busefisensi.efisiensiku.parser.Parser;
 import com.busefisensi.efisiensiku.transport.HTTPClient;
+import com.javasoul.swframework.component.SWProgressDialog;
 import com.javasoul.swframework.component.SWToast;
 import com.javasoul.swframework.model.SWResult;
 
@@ -72,6 +73,12 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleAdapt
 
         String url = builder.toString();
 
+        // FIXME di hardcode dulu biar gampang
+        url = "http://rbt.arutala.co.id/efisiensi-mobile-test/v1/jadwal/agen/5/1/19-03-2019/1";
+
+        final SWProgressDialog progressDialog = new SWProgressDialog(this);
+        progressDialog.showProgressIndeterminate(true);
+
         HTTPClient.sendHTTPGETJSON(url, new Callback() {
             @Override
             public void onFailure(Call call, final IOException e) {
@@ -79,6 +86,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleAdapt
                     @Override
                     public void run() {
                         SWToast.showLongError(e.getMessage());
+                        progressDialog.dismiss();
                     }
                 });
             }
@@ -94,7 +102,7 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleAdapt
                         if(result.getResult()) {
                             SWToast.showShortSuccess(getResources().getString(R.string.load_schedule_success));
 
-                            HashMap<String, Object> data = new HashMap<>();
+                            HashMap<String, Object> data = result.getData();
                             schedules = (List) data.get("schedules");
 
                             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ScheduleActivity.this);
@@ -104,6 +112,8 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleAdapt
                         } else {
                             SWToast.showLongError(result.getError());
                         }
+
+                        progressDialog.dismiss();
                     }
                 });
             }

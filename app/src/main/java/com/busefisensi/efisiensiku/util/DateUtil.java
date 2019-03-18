@@ -9,4 +9,14 @@ public class DateUtil {
         return (new SimpleDateFormat("dd MMM yyyy")).format(date);
     }
 
+    public static String getHourFromDateString(String date) {
+        String[] splitted = date.split(" ");
+        return splitted[1];
+    }
+
+    public static String getDateFromDateString(String date) {
+        String[] splitted = date.split(" ");
+        return splitted[0];
+    }
+
 }

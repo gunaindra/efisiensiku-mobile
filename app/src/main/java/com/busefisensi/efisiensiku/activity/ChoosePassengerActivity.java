@@ -17,9 +17,11 @@ import android.widget.TextView;
 
 import com.busefisensi.efisiensiku.R;
 import com.busefisensi.efisiensiku.adapter.PassengerAdapter;
+import com.busefisensi.efisiensiku.constant.RequestCode;
 import com.busefisensi.efisiensiku.database.DBHelper;
 import com.busefisensi.efisiensiku.database.PassengerStorage;
 import com.busefisensi.efisiensiku.model.Passenger;
+import com.javasoul.swframework.component.SWProgressDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,8 @@ public class ChoosePassengerActivity extends AppCompatActivity implements Loader
 
     private List<Passenger> existingPassengers = new ArrayList<>();
 
+    private SWProgressDialog progressDialog;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +46,8 @@ public class ChoosePassengerActivity extends AppCompatActivity implements Loader
         rvPassenger = findViewById(R.id.rv_passenger);
         ivAddPassenger = findViewById(R.id.iv_add_passenger);
         btnSavePassenger = findViewById(R.id.btn_save_passenger);
+
+         progressDialog = new SWProgressDialog(this);
 
         tvTitle.setText(getResources().getString(R.string.choose_passenger));
 
@@ -57,19 +63,23 @@ public class ChoosePassengerActivity extends AppCompatActivity implements Loader
     @NonNull
     @Override
     public Loader<List<Passenger>> onCreateLoader(int i, @Nullable Bundle bundle) {
+        progressDialog.showProgressIndeterminate(true);
         return new AsyncTaskLoader<List<Passenger>>(this) {
             @Nullable
             @Override
             public List<Passenger> loadInBackground() {
-                String where = "where id not in ";
-                StringBuilder builder = new StringBuilder();
-                builder.append("(");
-                for(Passenger passenger: existingPassengers) {
-                    builder.append(passenger.getId() + ", ");
+                String where = "";
+                if(existingPassengers.size()>0) {
+                    where = "where id not in ";
+                    StringBuilder builder = new StringBuilder();
+                    builder.append("(");
+                    for(Passenger passenger: existingPassengers) {
+                        builder.append(passenger.getId() + ", ");
+                    }
+                    builder.delete(builder.toString().length()-2, builder.toString().length());
+                    builder.append(")");
+                    where = where + builder.toString();
                 }
-                builder.delete(builder.toString().length()-2, builder.toString().length());
-                builder.append(")");
-                where = where + builder.toString();
 
                 PassengerStorage passengerStorage = new PassengerStorage(DBHelper.getInstance().getReadableDatabase());
                 List<Passenger> passengers = passengerStorage.getAllPassengersCustomWhereClause(where);
@@ -85,6 +95,8 @@ public class ChoosePassengerActivity extends AppCompatActivity implements Loader
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ChoosePassengerActivity.this);
         rvPassenger.setAdapter(passengerAdapter);
         rvPassenger.setLayoutManager(linearLayoutManager);
+
+        progressDialog.dismiss();
     }
 
     @Override
@@ -103,7 +115,7 @@ public class ChoosePassengerActivity extends AppCompatActivity implements Loader
             }
 
             Intent intent = new Intent();
-            intent.putExtra("passengers", new ArrayList<>(selectedPassengers));
+            intent.putParcelableArrayListExtra("passengers", new ArrayList<>(selectedPassengers));
             setResult(RESULT_OK, intent);
             finish();
         }
@@ -112,8 +124,16 @@ public class ChoosePassengerActivity extends AppCompatActivity implements Loader
     private class AddPassenger implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-
+            Intent intent = new Intent(ChoosePassengerActivity.this, FormPassengerActivity.class);
+            startActivityForResult(intent, RequestCode.CREATE_PASSENGER.get());
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == RequestCode.CREATE_PASSENGER.get()) {
+            getSupportLoaderManager().restartLoader(0, null, ChoosePassengerActivity.this).forceLoad();
+        }
+    }
 }

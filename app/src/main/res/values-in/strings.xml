@@ -11,6 +11,7 @@
     <string name="origin_body">Pilih Asal Keberangkatan</string>
     <string name="msg_agent_loaded">Pengambilan daftar agen berhasil</string>
     <string name="departure">Keberangkatan</string>
+    <string name="destination">Tujuan</string>
     <string name="choose_departure_date">Pilih Jadwal Keberangkatan</string>
     <string name="search_agent">Cari agen</string>
     <string name="today">Hari ini</string>

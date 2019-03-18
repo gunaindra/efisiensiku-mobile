@@ -13,10 +13,13 @@ import com.busefisensi.efisiensiku.R;
 import com.busefisensi.efisiensiku.activity.AgentActivity;
 import com.busefisensi.efisiensiku.activity.CalendarActivity;
 import com.busefisensi.efisiensiku.activity.PassengerActivity;
+import com.busefisensi.efisiensiku.activity.ScheduleActivity;
 import com.busefisensi.efisiensiku.constant.RequestCode;
 import com.busefisensi.efisiensiku.model.Agent;
 import com.busefisensi.efisiensiku.model.Passenger;
 import com.busefisensi.efisiensiku.model.Schedule;
+import com.busefisensi.efisiensiku.util.DateUtil;
+import com.javasoul.swframework.component.SWDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +36,13 @@ public class BookingFragment extends Fragment {
 
     private MaterialCardView cvSchedule;
 
-    private Agent agentDeparture = new Agent();
-    private Agent agentDestination = new Agent();
+    private Agent agentDeparture;
+    private Agent agentDestination;
     private List<Passenger> passengers = new ArrayList<>();
-    private String date = "";
-    private Schedule schedule = new Schedule();
+    private String date;
+    private String dateBeautify;
+    private String hour;
+    private Schedule schedule;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -87,9 +92,34 @@ public class BookingFragment extends Fragment {
         cvSchedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), PassengerActivity.class);
-                intent.putParcelableArrayListExtra("passengers", new ArrayList<>(passengers));
-                startActivityForResult(intent, RequestCode.CHOOSE_SCHEDULE.get());
+                if(validate(date, agentDeparture, agentDestination)) {
+                    Intent intent = new Intent(getActivity(), ScheduleActivity.class);
+                    intent.putExtra("date", date);
+                    intent.putExtra("agentOrigin", agentDeparture);
+                    intent.putExtra("agentDestination", agentDestination);
+
+                    startActivityForResult(intent, RequestCode.CHOOSE_SCHEDULE.get());
+                } else {
+                    SWDialog.warning(getActivity(), "Validation", "Make sure date, departure agent, departure destination has been filled");
+                }
+            }
+        });
+
+        tvPassenger.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(validate(agentDeparture, agentDestination, date, schedule)) {
+                    Intent intent = new Intent(getActivity(), PassengerActivity.class);
+                    intent.putParcelableArrayListExtra("passengers", new ArrayList<>(passengers));
+                    intent.putExtra("departure", agentDeparture);
+                    intent.putExtra("destination", agentDestination);
+                    intent.putExtra("date", dateBeautify);
+                    intent.putExtra("time", hour);
+
+                    startActivityForResult(intent, RequestCode.CHOOSE_PASSENGER.get());
+                } else {
+                    SWDialog.warning(getActivity(), "Validation", "Make sure date, departure agent, departure destination, and schedule has been filled");
+                }
             }
         });
     }
@@ -116,10 +146,12 @@ public class BookingFragment extends Fragment {
             int year = data.getIntExtra("year", 0);
             String day = data.getStringExtra("day");
             tvDay.setText(day);
-            tvDate.setText(date + " " + month.substring(0,3) + " " + year);
+            dateBeautify = date + " " + month.substring(0,3) + " " + year;
+            tvDate.setText(dateBeautify);
         } else if(requestCode == RequestCode.CHOOSE_SCHEDULE.get() && data!=null) {
             schedule = data.getParcelableExtra("schedule");
-            tvSchedule.setText(schedule.getUpTime());
+            hour = DateUtil.getHourFromDateString(schedule.getUpTime());
+            tvSchedule.setText(hour);
         } else if(requestCode == RequestCode.CHOOSE_PASSENGER.get() && data!=null) {
             passengers = data.getParcelableArrayListExtra("passengers");
             tvPassenger.setText(wrapPassengers());
@@ -133,6 +165,17 @@ public class BookingFragment extends Fragment {
         }
 
         return builder.toString().substring(0, builder.toString().length()-2);
+    }
+
+    private Boolean validate(Object... objects) {
+        Boolean valid = true;
+        for(Object object: objects) {
+            if(object == null) {
+                valid = false;
+            }
+        }
+
+        return valid;
     }
 
 }

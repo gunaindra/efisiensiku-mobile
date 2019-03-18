@@ -53,6 +53,7 @@ public class FormPassengerActivity extends AppCompatActivity {
 
                     if(inserted>0) {
                         SWToast.showShortSuccess(getResources().getString(R.string.save_success));
+                        finish();
                     } else {
                         SWToast.showShortFailed(getResources().getString(R.string.save_failed));
                     }

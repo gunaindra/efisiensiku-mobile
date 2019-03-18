@@ -13,5 +13,6 @@ public class Efisiensiku extends Application {
 
         SWToast.init(getApplicationContext());
         DBHelper dbHelper = new DBHelper(getApplicationContext());
+        dbHelper.getWritableDatabase();
     }
 }

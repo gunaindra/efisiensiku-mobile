@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.busefisensi.efisiensiku.R;
@@ -42,10 +43,10 @@ public class PassengerAdapter extends RecyclerView.Adapter<PassengerAdapter.View
 
         if(selection) {
             viewHolder.ivSelection.setBackground(context.getResources().getDrawable(R.drawable.ic_selection_false));
-            viewHolder.ivSelection.setOnClickListener(new View.OnClickListener() {
+            viewHolder.rlPassengerItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(viewHolder.ivSelection.getDrawable().getConstantState().equals(context.getResources().getDrawable(R.drawable.ic_selection_true).getConstantState())) {
+                    if(viewHolder.ivSelection.getBackground().getConstantState().equals(context.getResources().getDrawable(R.drawable.ic_selection_true).getConstantState())) {
                         viewHolder.ivSelection.setBackground(context.getResources().getDrawable(R.drawable.ic_selection_false));
                         passengers.get(i).setSelected(false);
                     } else {
@@ -83,10 +84,12 @@ public class PassengerAdapter extends RecyclerView.Adapter<PassengerAdapter.View
 
         private TextView tvPassengerName;
         private ImageView ivSelection;
+        private RelativeLayout rlPassengerItem;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            rlPassengerItem = itemView.findViewById(R.id.rl_passenger_item);
             tvPassengerName = itemView.findViewById(R.id.tv_passenger_name);
             ivSelection = itemView.findViewById(R.id.iv_selection);
         }

@@ -28,6 +28,10 @@
         <activity android:name=".activity.AgentActivity"></activity>
         <activity android:name=".activity.SearchActivity"></activity>
         <activity android:name=".activity.CalendarActivity"></activity>
+        <activity android:name=".activity.ChoosePassengerActivity"></activity>
+        <activity android:name=".activity.PassengerActivity"></activity>
+        <activity android:name=".activity.ScheduleActivity"></activity>
+        <activity android:name=".activity.FormPassengerActivity"></activity>
     </application>
 
 </manifest>

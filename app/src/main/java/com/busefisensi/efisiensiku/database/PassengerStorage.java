@@ -43,18 +43,20 @@ public class PassengerStorage {
     }
 
     public List<Passenger> getAllPassengersCustomWhereClause(String where) {
-        Cursor cursor = db.rawQuery("select * from passengers " + where, null);
+        Cursor cursor = db.rawQuery("select * from passenger " + where, null);
         cursor.moveToNext();
 
         List<Passenger> passengers = new ArrayList<>();
         while(cursor.isAfterLast() == false) {
             Passenger passenger = new Passenger();
-            passenger.setFirstName(cursor.getColumnName(cursor.getColumnIndex(FIRST_NAME)));
-            passenger.setLastName(cursor.getColumnName(cursor.getColumnIndex(LAST_NAME)));
-            passenger.setEmail(cursor.getColumnName(cursor.getColumnIndex(EMAIL)));
-            passenger.setTelephon(cursor.getColumnName(cursor.getColumnIndex(TELEPHONE)));
+            passenger.setId(cursor.getInt(cursor.getColumnIndex(ID)));
+            passenger.setFirstName(cursor.getString(cursor.getColumnIndex(FIRST_NAME)));
+            passenger.setLastName(cursor.getString(cursor.getColumnIndex(LAST_NAME)));
+            passenger.setEmail(cursor.getString(cursor.getColumnIndex(EMAIL)));
+            passenger.setTelephon(cursor.getString(cursor.getColumnIndex(TELEPHONE)));
 
             passengers.add(passenger);
+            cursor.moveToNext();
         }
 
         return passengers;
@@ -75,7 +77,7 @@ public class PassengerStorage {
     }
 
     public static String createTable() {
-        return "CREATE TABLE passenger (id int primary key autoincrement, first_name varchar(100), last_name varchar(100), email varchar(100), telephone varchar(100));";
+        return "CREATE TABLE passenger (id integer primary key autoincrement, first_name varchar(100), last_name varchar(100), email varchar(100), telephone varchar(100));";
     }
 
 }
