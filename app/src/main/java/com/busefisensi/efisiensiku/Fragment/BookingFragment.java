@@ -29,6 +29,7 @@ public class BookingFragment extends Fragment {
     private TextView tvDay;
     private TextView tvDate;
     private TextView tvSchedule;
+    private TextView tvPassenger;
 
     private MaterialCardView cvSchedule;
 
@@ -48,6 +49,7 @@ public class BookingFragment extends Fragment {
         tvDay = view.findViewById(R.id.tv_day);
         tvDate = view.findViewById(R.id.tv_date);
         tvSchedule = view.findViewById(R.id.tvJam);
+        tvPassenger = view.findViewById(R.id.tv_passenger);
 
         cvSchedule = view.findViewById(R.id.cvJam);
 
@@ -116,8 +118,11 @@ public class BookingFragment extends Fragment {
             tvDay.setText(day);
             tvDate.setText(date + " " + month.substring(0,3) + " " + year);
         } else if(requestCode == RequestCode.CHOOSE_SCHEDULE.get() && data!=null) {
+            schedule = data.getParcelableExtra("schedule");
+            tvSchedule.setText(schedule.getUpTime());
+        } else if(requestCode == RequestCode.CHOOSE_PASSENGER.get() && data!=null) {
             passengers = data.getParcelableArrayListExtra("passengers");
-            tvSchedule.setText(wrapPassengers());
+            tvPassenger.setText(wrapPassengers());
         }
     }
 

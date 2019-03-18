@@ -101,4 +101,12 @@ public class PassengerActivity extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra("passengers", new ArrayList<>(passengers));
+        setResult(RESULT_OK, intent);
+        finish();
+    }
 }
