@@ -20,4 +20,11 @@
     <string name="save">Save</string>
     <string name="empty_passenger">Register passenger to start order</string>
     <string name="passenger_informations">Passenger Information</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="contact_information">Contact Information</string>
+    <string name="email">Email</string>
+    <string name="no_telephone">No Telephone</string>
+    <string name="save_success">Save success</string>
+    <string name="save_failed">Save failed</string>
 </resources>

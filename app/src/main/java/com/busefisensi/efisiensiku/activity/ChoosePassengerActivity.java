@@ -51,6 +51,7 @@ public class ChoosePassengerActivity extends AppCompatActivity implements Loader
         getSupportLoaderManager().initLoader(0, null, this).forceLoad();
 
         btnSavePassenger.setOnClickListener(new OnSave());
+        ivAddPassenger.setOnClickListener(new AddPassenger());
     }
 
     @NonNull
@@ -111,7 +112,7 @@ public class ChoosePassengerActivity extends AppCompatActivity implements Loader
     private class AddPassenger implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            
+
         }
     }
 
