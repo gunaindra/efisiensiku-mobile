@@ -10,7 +10,9 @@
     <string name="origin_body">Choose Port of Origin</string>
     <string name="msg_agent_loaded">Agent data successfully loaded</string>
     <string name="departure">Departure</string>
+    <string name="choose_departure_date">Choose Departure Schedule</string>
     <string name="search_agent">Search agent</string>
     <string name="today">Today</string>
     <string name="departure_date">Choose Departure Date</string>
+    <string name="load_schedule_success">Schedule has been loaded</string>
 </resources>

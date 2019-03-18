@@ -20,11 +20,20 @@ public class Parser {
     }
 
     public SWResult agentParser() {
-
         SWResult result = defaultParser();
         if(result.getResult()) {
             AgentParser agentParser = new AgentParser(responseBody);
             return agentParser.getResult();
+        }
+
+        return result;
+    }
+
+    public SWResult scheduleParser() {
+        SWResult result = defaultParser();
+        if(result.getResult()) {
+            ScheduleParser scheduleParser = new ScheduleParser(responseBody);
+            return scheduleParser.getResult();
         }
 
         return result;

@@ -1,6 +1,7 @@
 package com.busefisensi.efisiensiku.parser;
 
 import com.busefisensi.efisiensiku.model.Agent;
+import com.javasoul.swframework.component.SWLog;
 import com.javasoul.swframework.model.SWResult;
 
 import org.json.JSONArray;
@@ -42,6 +43,8 @@ public class AgentParser {
         }catch(JSONException e) {
             result.setResult(false);
             result.addError(e.getMessage());
+
+            SWLog.e(AgentParser.class, e.getMessage());
         }
     }
 

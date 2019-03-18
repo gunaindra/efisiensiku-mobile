@@ -59,14 +59,25 @@ public class AgentActivity extends AppCompatActivity implements AgentAdapter.OnC
         tvToolbar.setText(getResources().getString(R.string.departure));
         btnSearch.setOnClickListener(new OnClickSearch());
 
-
         loadAllAgent();
     }
 
     private void loadAllAgent() {
         final SWProgressDialog progressDialog = new SWProgressDialog(this);
         progressDialog.showProgressIndeterminate(true);
-        HTTPClient.sendHTTPGETJSON(URL.AGENT.get(), new Callback() {
+
+        Intent intent = getIntent();
+        int requestCode = intent.getIntExtra("requestCode", 0);
+        String url = "";
+        if(requestCode == RequestCode.CHOOSE_DEPARTURE.get()) {
+            url = URL.AGENT_ORIGIN.get();
+        } else if(requestCode == RequestCode.CHOOSE_DESTINATION.get()) {
+            url = URL.AGENT_DESTINATION.get();
+        } else {
+
+        }
+
+        HTTPClient.sendHTTPGETJSON(url, new Callback() {
             @Override
             public void onFailure(Call call, final IOException e) {
                 runOnUiThread(new Runnable() {

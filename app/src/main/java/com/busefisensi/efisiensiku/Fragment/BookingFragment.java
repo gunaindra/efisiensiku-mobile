@@ -44,14 +44,18 @@ public class BookingFragment extends Fragment {
         tvFrom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(getActivity(), AgentActivity.class), RequestCode.CHOOSE_DEPARTURE.get());
+                Intent intent = new Intent(getActivity(), AgentActivity.class);
+                intent.putExtra("requestCode", RequestCode.CHOOSE_DEPARTURE.get());
+                startActivityForResult(intent, RequestCode.CHOOSE_DEPARTURE.get());
             }
         });
 
         tvDestination.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(getActivity(), AgentActivity.class), RequestCode.CHOOSE_DESTINATION.get());
+                Intent intent = new Intent(getActivity(), AgentActivity.class);
+                intent.putExtra("requestCode", RequestCode.CHOOSE_DESTINATION.get());
+                startActivityForResult(intent, RequestCode.CHOOSE_DESTINATION.get());
             }
         });
 
