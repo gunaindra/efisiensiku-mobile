@@ -76,6 +76,10 @@ public class PassengerAdapter extends RecyclerView.Adapter<PassengerAdapter.View
         return selectedPassenger;
     }
 
+    public Integer getPassengerId(int position) {
+        return passengers.get(position).getId();
+    }
+
     public List<Passenger> getPassengers() {
         return passengers;
     }

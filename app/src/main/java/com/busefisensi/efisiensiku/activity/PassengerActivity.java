@@ -2,10 +2,12 @@ package com.busefisensi.efisiensiku.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,8 +15,11 @@ import android.widget.TextView;
 import com.busefisensi.efisiensiku.R;
 import com.busefisensi.efisiensiku.adapter.PassengerAdapter;
 import com.busefisensi.efisiensiku.constant.RequestCode;
+import com.busefisensi.efisiensiku.database.DBHelper;
+import com.busefisensi.efisiensiku.database.PassengerStorage;
 import com.busefisensi.efisiensiku.model.Agent;
 import com.busefisensi.efisiensiku.model.Passenger;
+import com.javasoul.swframework.component.SWToast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +79,8 @@ public class PassengerActivity extends AppCompatActivity {
             }
         });
 
+        delete();
+
     }
 
     private void loadPassenger() {
@@ -109,4 +116,35 @@ public class PassengerActivity extends AppCompatActivity {
         setResult(RESULT_OK, intent);
         finish();
     }
+
+    private void delete() {
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                PassengerAdapter adapter = (PassengerAdapter) rvPassenger.getAdapter();
+                Integer id = adapter.getPassengerId(viewHolder.getAdapterPosition());
+
+                int index = 0;
+                for(int i=0; i<passengers.size(); i++) {
+                    if(passengers.get(i).getId() == id) {
+                        index = i;
+                        break;
+                    }
+                }
+
+                passengers.remove(index);
+
+                SWToast.showShortSuccess("Passenger deleted");
+            }
+
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+                return false;
+            }
+
+        });
+
+        itemTouchHelper.attachToRecyclerView(rvPassenger);
+    }
+
 }
