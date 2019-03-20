@@ -32,6 +32,9 @@ public class HomeActivity extends AppCompatActivity {
 //    public static final String FRAGMENT_OTHER;
 
     BottomNavigationView navigation;
+
+    private Fragment mBookingFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,8 +61,11 @@ public class HomeActivity extends AppCompatActivity {
             switch (item.getItemId()){
                 case R.id.nav_home:
                     tvToolbar.setText("Home");
-//                    fragment = new BookingFragment();
-                    loadFragment(new BookingFragment());
+
+                    if(mBookingFragment == null) {
+                        mBookingFragment = new BookingFragment();
+                    }
+                    loadFragment(mBookingFragment);
                     return true;
                 case R.id.nav_akun:
                     tvToolbar.setText("Akun");

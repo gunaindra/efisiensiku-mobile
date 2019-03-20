@@ -56,7 +56,6 @@ public class AgentActivity extends AppCompatActivity implements AgentAdapter.OnC
         rvCity = findViewById(R.id.rv_city);
         btnSearch = findViewById(R.id.btn_search);
 
-        tvToolbar.setText(getResources().getString(R.string.departure));
         btnSearch.setOnClickListener(new OnClickSearch());
 
         loadAllAgent();
@@ -71,8 +70,10 @@ public class AgentActivity extends AppCompatActivity implements AgentAdapter.OnC
         String url = "";
         if(requestCode == RequestCode.CHOOSE_DEPARTURE.get()) {
             url = URL.AGENT_ORIGIN.get();
+            tvToolbar.setText(getResources().getString(R.string.departure));
         } else if(requestCode == RequestCode.CHOOSE_DESTINATION.get()) {
             url = URL.AGENT_DESTINATION.get();
+            tvToolbar.setText(getResources().getString(R.string.destination));
         } else {
 
         }

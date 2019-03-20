@@ -6,6 +6,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -41,6 +44,7 @@ public class SearchActivity extends AppCompatActivity implements AgentAdapter.On
         loadData();
 
         btnSearch.setOnClickListener(new OnSearch());
+        txtSearch.addTextChangedListener(new SearchWatcher());
     }
 
     private void loadData() {
@@ -53,19 +57,25 @@ public class SearchActivity extends AppCompatActivity implements AgentAdapter.On
     private class OnSearch implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            List<Agent> filteredAgent = new ArrayList<>();
-            String searchKeyword = txtSearch.getText().toString().toLowerCase();
-            for(Agent agent: agents) {
-                if(agent.getAgentName().toLowerCase().contains(searchKeyword)) {
-                    filteredAgent.add(agent);
-                }
-            }
-
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(SearchActivity.this);
-            AgentAdapter agentAdapter = new AgentAdapter(SearchActivity.this, filteredAgent, SearchActivity.this);
-            rvAgents.setLayoutManager(linearLayoutManager);
-            rvAgents.setAdapter(agentAdapter);
+            search();
         }
+    }
+
+    private void search() {
+        List<Agent> filteredAgent = new ArrayList<>();
+        String searchKeyword = txtSearch.getText().toString().toLowerCase();
+        for(Agent agent: agents) {
+            if(agent.getAgentName().toLowerCase().contains(searchKeyword)) {
+                filteredAgent.add(agent);
+            } else if(agent.getAgentCityName().toLowerCase().contains(searchKeyword)) {
+                filteredAgent.add(agent);
+            }
+        }
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(SearchActivity.this);
+        AgentAdapter agentAdapter = new AgentAdapter(SearchActivity.this, filteredAgent, SearchActivity.this);
+        rvAgents.setLayoutManager(linearLayoutManager);
+        rvAgents.setAdapter(agentAdapter);
     }
 
     @Override
@@ -74,5 +84,22 @@ public class SearchActivity extends AppCompatActivity implements AgentAdapter.On
         intent.putExtra("agent", agent);
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    private class SearchWatcher implements TextWatcher {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            search();
+        }
     }
 }
