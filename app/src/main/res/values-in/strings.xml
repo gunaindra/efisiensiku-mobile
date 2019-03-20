@@ -29,4 +29,5 @@
     <string name="no_telephone">No Telepon</string>
     <string name="save_success">Sukses menyimpan</string>
     <string name="save_failed">Gagal menyimpan</string>
+    <string name="no_passenger">Tidak ada penumpang</string>
 </resources>

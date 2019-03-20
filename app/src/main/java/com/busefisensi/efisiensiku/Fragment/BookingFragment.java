@@ -25,6 +25,7 @@ import com.javasoul.swframework.component.SWDialog;
 import com.javasoul.swframework.component.SWSharedPreference;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class BookingFragment extends Fragment {
@@ -61,6 +62,8 @@ public class BookingFragment extends Fragment {
         tvPassenger = view.findViewById(R.id.tv_passenger);
 
         cvSchedule = view.findViewById(R.id.cvJam);
+
+        tvDate.setText(DateUtil.dateToStringDefault(new Date()));
 
         actions();
 
@@ -213,12 +216,16 @@ public class BookingFragment extends Fragment {
     }
 
     private String wrapPassengers(List<Passenger> passengers) {
-        StringBuilder builder = new StringBuilder();
-        for (Passenger passenger : passengers) {
-            builder.append(passenger.getFirstName() + " " + passenger.getLastName() + ", ");
-        }
+        if(passengers.size()>0) {
+            StringBuilder builder = new StringBuilder();
+            for (Passenger passenger : passengers) {
+                builder.append(passenger.getFirstName() + " " + passenger.getLastName() + ", ");
+            }
 
-        return builder.toString().substring(0, builder.toString().length() - 2);
+            return builder.toString().substring(0, builder.toString().length() - 2);
+        } else {
+            return getResources().getString(R.string.no_passenger);
+        }
     }
 
     private Boolean validate(Object... objects) {
