@@ -24,21 +24,41 @@ public class PassengerStorage {
         this.db = db;
     }
 
-    public List<Passenger> getAllPassengers() {
-        Cursor cursor = db.rawQuery("select * from passengers", null);
-        cursor.moveToNext();
-
+//    public List<Passenger> getAllPassengers() {
+//        Cursor cursor = db.rawQuery("select * from passenger", null);
+//        cursor.moveToNext();
+//
+//        List<Passenger> passengers = new ArrayList<>();
+//        while(cursor.isAfterLast() == false) {
+//            Passenger passenger = new Passenger();
+//            passenger.setFirstName(cursor.getColumnName(cursor.getColumnIndex(FIRST_NAME)));
+//            passenger.setLastName(cursor.getColumnName(cursor.getColumnIndex(LAST_NAME)));
+//            passenger.setEmail(cursor.getColumnName(cursor.getColumnIndex(EMAIL)));
+//            passenger.setTelephon(cursor.getColumnName(cursor.getColumnIndex(TELEPHONE)));
+//
+//            passengers.add(passenger);
+//        }
+//
+//        return passengers;
+//    }
+//
+    public List<Passenger> getAllPassengers(){
         List<Passenger> passengers = new ArrayList<>();
-        while(cursor.isAfterLast() == false) {
-            Passenger passenger = new Passenger();
-            passenger.setFirstName(cursor.getColumnName(cursor.getColumnIndex(FIRST_NAME)));
-            passenger.setLastName(cursor.getColumnName(cursor.getColumnIndex(LAST_NAME)));
-            passenger.setEmail(cursor.getColumnName(cursor.getColumnIndex(EMAIL)));
-            passenger.setTelephon(cursor.getColumnName(cursor.getColumnIndex(TELEPHONE)));
 
-            passengers.add(passenger);
+        Cursor cursor = db.rawQuery("select * from passenger", null);
+        if(cursor.moveToFirst()){
+            do{
+                Passenger passenger = new Passenger();
+                passenger.setId(cursor.getInt(cursor.getColumnIndex(ID)));
+                passenger.setFirstName(cursor.getString(cursor.getColumnIndex(FIRST_NAME)));
+                passenger.setLastName(cursor.getString(cursor.getColumnIndex(LAST_NAME)));
+                passenger.setEmail(cursor.getString(cursor.getColumnIndex(EMAIL)));
+                passenger.setTelephon(cursor.getString(cursor.getColumnIndex(TELEPHONE)));
+
+                passengers.add(passenger);
+            }while (cursor.moveToNext());
         }
-
+//        db.close();
         return passengers;
     }
 
@@ -63,6 +83,7 @@ public class PassengerStorage {
     }
 
     public long insert(Passenger passenger) {
+
         ContentValues contentValues = new ContentValues();
         contentValues.put(FIRST_NAME, passenger.getFirstName());
         contentValues.put(LAST_NAME, passenger.getLastName());

@@ -1,5 +1,6 @@
 package com.busefisensi.efisiensiku.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -60,6 +61,7 @@ public class ChoosePassengerActivity extends AppCompatActivity implements Loader
         ivAddPassenger.setOnClickListener(new AddPassenger());
     }
 
+    @SuppressLint("StaticFieldLeak")
     @NonNull
     @Override
     public Loader<List<Passenger>> onCreateLoader(int i, @Nullable Bundle bundle) {
