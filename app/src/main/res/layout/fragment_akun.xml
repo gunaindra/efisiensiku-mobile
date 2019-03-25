@@ -72,30 +72,51 @@
     </android.support.design.card.MaterialCardView>
 
     <android.support.design.card.MaterialCardView
+        android:id="@+id/cv_choose_passenger"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:background="@color/colorText">
+        android:layout_margin="20dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:padding="20dp">
 
             <TextView
-                android:id="@+id/tvPenumpang"
-                android:layout_width="match_parent"
+                android:id="@+id/tvTitlePenumpang"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
                 android:padding="8dp"
-                android:text="Achmad"/>
+                android:textSize="16sp"
+                android:text="@string/penumpang_pendamping"/>
+
+            <View
+                android:layout_below="@+id/tvTitlePenumpang"
+                android:id="@+id/linePenumpangPendamping"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_margin="8dp"
+                android:background="@color/colorBackground"/>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_below="@id/linePenumpangPendamping"
+                android:layout_marginTop="10dp"
+                android:id="@+id/rv_passenger"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:id="@+id/iv_add_passenger"
+                android:layout_below="@id/rv_passenger"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/bg_circle_orange_plus"/>
+
         </RelativeLayout>
-
     </android.support.design.card.MaterialCardView>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabAddPenumpang"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
-        android:backgroundTint="@color/colorButton"
-        android:src="@drawable/add"/>
 </LinearLayout>

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.busefisensi.efisiensiku.R;
+import com.busefisensi.efisiensiku.database.SpUser;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -21,6 +22,12 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        SpUser spUser = new SpUser(getApplicationContext());
+        if(spUser.getIsLogin()){
+            startActivity(new Intent(LoginActivity.this, HomeActivity.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+            finish();
+        }
 
         btnRegister = findViewById(R.id.btnDaftar);
         tvLewati = findViewById(R.id.tvSkip);
