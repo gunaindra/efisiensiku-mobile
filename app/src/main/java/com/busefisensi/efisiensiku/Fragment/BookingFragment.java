@@ -5,13 +5,16 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.design.card.MaterialCardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.busefisensi.efisiensiku.R;
 import com.busefisensi.efisiensiku.activity.AgentActivity;
+import com.busefisensi.efisiensiku.activity.BookingSeatActivity;
 import com.busefisensi.efisiensiku.activity.CalendarActivity;
 import com.busefisensi.efisiensiku.activity.PassengerActivity;
 import com.busefisensi.efisiensiku.activity.ScheduleActivity;
@@ -40,6 +43,8 @@ public class BookingFragment extends Fragment {
 
     private MaterialCardView cvSchedule;
 
+    private ImageView ivNextBooking;
+
     private Agent agentDeparture;
     private Agent agentDestination;
     private List<Passenger> passengers = new ArrayList<>();
@@ -62,6 +67,8 @@ public class BookingFragment extends Fragment {
         tvPassenger = view.findViewById(R.id.tv_passenger);
 
         cvSchedule = view.findViewById(R.id.cvJam);
+
+        ivNextBooking = view.findViewById(R.id.iv_nextBooking);
 
         tvDate.setText(DateUtil.dateToStringDefault(new Date()));
 
@@ -135,6 +142,8 @@ public class BookingFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), AgentActivity.class);
                 intent.putExtra("requestCode", RequestCode.CHOOSE_DESTINATION.get());
+                intent.putExtra("agentOrigin", agentDeparture.getId().toString());
+                Log.d("agentOrigin", agentDeparture.getId().toString());
                 startActivityForResult(intent, RequestCode.CHOOSE_DESTINATION.get());
             }
         });
@@ -179,6 +188,17 @@ public class BookingFragment extends Fragment {
                 }
             }
         });
+
+        ivNextBooking.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(getActivity(), BookingSeatActivity.class);
+                intent.putExtra("agenOrigin", agentDeparture.getId().toString());
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     @Override
@@ -192,6 +212,7 @@ public class BookingFragment extends Fragment {
             }
         } else if (requestCode == RequestCode.CHOOSE_DESTINATION.get() && data != null) {
             Agent agent = data.getParcelableExtra("agent");
+
             if (agent != null) {
                 agentDestination = agent;
                 tvDestination.setText(agent.getAgentName());

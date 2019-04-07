@@ -32,6 +32,7 @@
         <activity android:name=".activity.PassengerActivity"></activity>
         <activity android:name=".activity.ScheduleActivity"></activity>
         <activity android:name=".activity.FormPassengerActivity"></activity>
+        <activity android:name=".activity.BookingSeatActivity"></activity>
     </application>
 
 </manifest>

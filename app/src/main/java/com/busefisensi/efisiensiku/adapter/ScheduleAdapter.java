@@ -42,6 +42,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHo
         viewHolder.tvScheduleHour.setText("Pukul " + schedule.getUpTime());
         viewHolder.tvScheduleChair.setText("Tersedia " + schedule.getEmptyChairs() + " kursi");
         viewHolder.tvSchedulePrice.setText(StringUtil.getPriceInRupiahFormat(schedule.getPrice()));
+//                (StringUtil.getPriceInRupiahFormat(schedule.getPrice()));
 
         viewHolder.rlScheduleItem.setOnClickListener(new View.OnClickListener() {
             @Override

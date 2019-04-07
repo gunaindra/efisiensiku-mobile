@@ -66,13 +66,14 @@ public class AgentActivity extends AppCompatActivity implements AgentAdapter.OnC
         progressDialog.showProgressIndeterminate(true);
 
         Intent intent = getIntent();
+        String agenTurun = intent.getStringExtra("agentOrigin");
         int requestCode = intent.getIntExtra("requestCode", 0);
         String url = "";
         if(requestCode == RequestCode.CHOOSE_DEPARTURE.get()) {
             url = URL.AGENT_ORIGIN.get();
             tvToolbar.setText(getResources().getString(R.string.departure));
         } else if(requestCode == RequestCode.CHOOSE_DESTINATION.get()) {
-            url = URL.AGENT_DESTINATION.get();
+            url = URL.AGENT_DESTINATION.get() + agenTurun;
             tvToolbar.setText(getResources().getString(R.string.destination));
         } else {
 
@@ -81,14 +82,7 @@ public class AgentActivity extends AppCompatActivity implements AgentAdapter.OnC
         HTTPClient.sendHTTPGETJSON(url, new Callback() {
             @Override
             public void onFailure(Call call, final IOException e) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        SWToast.showLongError(e.getMessage());
-                        SWLog.e(AgentActivity.class, "loadAllAgent", e.getMessage());
-                        progressDialog.dismiss();
-                    }
-                });
+
             }
 
             @Override
@@ -138,15 +132,25 @@ public class AgentActivity extends AppCompatActivity implements AgentAdapter.OnC
                 tvOriginBody.setText(agent.getAgentName());
                 tvOriginBodyAddress.setText(agent.getAgentAddress());
                 this.agent = agent;
+
             }
         }
+        finish();
     }
 
     @Override
     public void onClick(Agent agent) {
         tvOriginBody.setText(agent.getAgentName());
         tvOriginBodyAddress.setText(agent.getAgentAddress());
-        this.agent = agent;
+        if(agent.getId() != null) {
+            Intent intent = new Intent();
+            intent.putExtra("agent", agent);
+            setResult(RESULT_OK, intent);
+            finish();
+        } else {
+            setResult(RESULT_OK);
+            finish();
+        }
     }
 
     @Override

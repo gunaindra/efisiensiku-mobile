@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.busefisensi.efisiensiku.R;
@@ -69,12 +70,12 @@ public class ScheduleActivity extends AppCompatActivity implements ScheduleAdapt
         builder.append(agentOrigin.getId() + "/");
         builder.append(agentDestination.getId() + "/");
         builder.append(date + "/");
-        builder.append(1 + "/");
 
         String url = builder.toString();
+        Log.d("urlstring", url);
 
         // FIXME di hardcode dulu biar gampang
-        url = "http://rbt.arutala.co.id/efisiensi-mobile-test/v1/jadwal/agen/5/1/19-03-2019/1";
+//        url = "";
 
         final SWProgressDialog progressDialog = new SWProgressDialog(this);
         progressDialog.showProgressIndeterminate(true);

@@ -39,6 +39,15 @@ public class Parser {
         return result;
     }
 
+    public SWResult seatParser(){
+        SWResult result = defaultParser();
+        if(result.getResult()){
+            SeatParser seatParser = new SeatParser(responseBody);
+            return seatParser.getResult();
+        }
+        return result;
+    }
+
     private SWResult defaultParser() {
         try {
             int code = response.code();

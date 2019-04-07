@@ -15,7 +15,7 @@ public class StringUtil {
 
         kursIndonesia.setDecimalFormatSymbols(formatRp);
         String result = kursIndonesia.format(amount);
-        return result.substring(0, result.length()-3);
+        return result;
     }
 
 }
